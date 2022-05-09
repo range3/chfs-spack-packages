@@ -2,20 +2,21 @@ from spack import *
 
 
 class Chfs(AutotoolsPackage):
-    """CHFS parallel and distributed file system for node-local persistent memory"""
+    '''CHFS parallel and distributed file system for node-local persistent memory'''
 
     homepage = 'https://github.com/otatebe/chfs'
     git = 'https://github.com/otatebe/chfs.git'
-    url = 'https://github.com/otatebe/chfs/archive/v1.0.0.tar.gz'
+    url = 'https://github.com/otatebe/chfs/archive/1.0.0.tar.gz'
 
     maintainers = ['range3']
 
     version('master', branch='master')
     version('develop', branch='master')
-    version('1.0.0', sha256='9e8fce88a6bd9c1002b4a6924c935ebb2e2024e3afe6618b17e23538335bd15d')
+    version('1.0.0', sha256='315295bf10b3b3fb93620791e844c540f6f238b4eab6a5c56825c6b7896737a2')
     # version('1.0.0-exp', git='', branch='experimental')
 
-    variant('verbs', default=False, description="enable verbs")
+    variant('verbs', default=False, description='enable verbs')
+    variant('pandoc', default=False, description='generate manual pages')
 
     depends_on('libfabric fabrics=rxm,sockets,tcp,udp', when='~verbs')
     depends_on('libfabric fabrics=rxm,sockets,tcp,udp,verbs', when='+verbs')
@@ -24,12 +25,17 @@ class Chfs(AutotoolsPackage):
     depends_on('pmemkv')
     depends_on('memkind')
     depends_on('libpmemobj-cpp')
+    depends_on('libfuse', type=('build', 'link', 'run'))
+    depends_on('pandoc', when='+pandoc')
 
-    depends_on('autoconf', type=("build"))
-    depends_on('m4', type=('build'))
-    depends_on('automake', type=("build"))
-    depends_on('libtool', type=("build"))
-    depends_on('pkg-config', type=("build"))
+    depends_on('autoconf', type=('build'))
+    depends_on('automake', type=('build'))
+    depends_on('libtool', type=('build'))
+    depends_on('pkg-config', type=('build'))
+
+    def autoreconf(self, spec, prefix):
+        autoreconf = which('autoreconf')
+        autoreconf('-fiv')
 
     def configure_args(self):
         args = ['--with-pmemkv']
