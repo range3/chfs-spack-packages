@@ -25,7 +25,7 @@ class Chfs(AutotoolsPackage):
     depends_on('pmemkv')
     depends_on('memkind')
     depends_on('libpmemobj-cpp')
-    depends_on('libfuse', type=('build', 'link', 'run'))
+    depends_on('libfuse@2')
     depends_on('pandoc', when='+pandoc')
 
     depends_on('autoconf', type=('build'))
