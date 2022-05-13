@@ -21,11 +21,8 @@ class Chfs(AutotoolsPackage):
 
     depends_on('libfabric fabrics=rxm,sockets,tcp,udp', when='~verbs')
     depends_on('libfabric fabrics=rxm,sockets,tcp,udp,verbs', when='+verbs')
-    depends_on('mercury')
     depends_on('mochi-margo')
-    depends_on('pmemkv')
-    depends_on('memkind')
-    depends_on('libpmemobj-cpp')
+    depends_on('pmemkv', when='+pmemkv')
     depends_on('libfuse@2')
     depends_on('pandoc', when='+pandoc')
 
