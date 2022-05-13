@@ -17,6 +17,7 @@ class Chfs(AutotoolsPackage):
 
     variant('verbs', default=False, description='enable verbs')
     variant('pandoc', default=False, description='generate manual pages')
+    variant('pmemkv', default=True, description='use pmemkv instead of a POSIX backend')
 
     depends_on('libfabric fabrics=rxm,sockets,tcp,udp', when='~verbs')
     depends_on('libfabric fabrics=rxm,sockets,tcp,udp,verbs', when='+verbs')
@@ -38,9 +39,12 @@ class Chfs(AutotoolsPackage):
         autoreconf('-fiv')
 
     def configure_args(self):
-        args = ['--with-pmemkv']
+        args = []
 
         if '+verbs' in self.spec:
             args.extend(['--enable-zero-copy-read-rdma'])
+        
+        if '+pmemkv' in self.spec:
+            args.extend(['--with-pmemkv'])
 
         return args
