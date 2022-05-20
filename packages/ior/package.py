@@ -8,17 +8,17 @@ from spack.pkg.builtin.ior import Ior as BuiltinIor
 
 class Ior(BuiltinIor):
 
-    git = 'https://github.com/otatebe/ior'
-    version('develop', branch='master', submodules=True)
-    version('master', branch='master', submodules=True)
-    version('chfs', branch='feature/chfs', submodules=True)
+    git = 'https://github.com/hpc/ior'
+    version('develop', branch='main', submodules=True)
+    version('main', branch='main', submodules=True)
 
     variant('chfs', default=False, description='support CHFS in IOR')
 
     # chfs
     depends_on('chfs', when='+chfs')
     depends_on('openssl', when='+chfs')
-    conflicts('+chfs', when='@0:') # force ior@chfs
+    depends_on('pkg-config', when='+chfs')
+    conflicts('+chfs', when='@:3') # force ior@main or @develop
 
     def configure_args(self):
         spec = self.spec
