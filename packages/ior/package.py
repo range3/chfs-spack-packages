@@ -17,7 +17,7 @@ class Ior(BuiltinIor):
     # chfs
     depends_on('chfs', when='+chfs')
     depends_on('openssl', when='+chfs')
-    depends_on('pkg-config', when='+chfs')
+    depends_on('pkgconfig', when='+chfs')
     conflicts('+chfs', when='@:3') # force ior@main or @develop
 
     def configure_args(self):
