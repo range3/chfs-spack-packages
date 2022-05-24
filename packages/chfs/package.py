@@ -18,8 +18,8 @@ class Chfs(AutotoolsPackage):
     variant('verbs', default=False, description='enable verbs')
     variant('pandoc', default=False, description='generate manual pages')
     variant('pmemkv', default=True, description='use pmemkv instead of a POSIX backend')
-    variant('rdma', default=False, description='enable zero copy read rdma')
-    conflicts('+rdma', when='~pmemkv')
+    variant('zero_copy_read_rdma', default=False, description='enable zero copy read rdma')
+    conflicts('+zero_copy_read_rdma', when='~pmemkv')
 
     depends_on('libfabric fabrics=rxm,sockets,tcp,udp', when='~verbs')
     depends_on('libfabric fabrics=rxm,sockets,tcp,udp,verbs', when='+verbs')
@@ -43,7 +43,7 @@ class Chfs(AutotoolsPackage):
         if '+pmemkv' in self.spec:
             args.extend(['--with-pmemkv'])
 
-        if '+rdma' in self.spec:
+        if '+zero_copy_read_rdma' in self.spec:
             args.extend(['--enable-zero-copy-read-rdma'])
         
 
