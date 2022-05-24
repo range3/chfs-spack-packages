@@ -29,7 +29,7 @@ class Chfs(AutotoolsPackage):
     depends_on('autoconf', type=('build'))
     depends_on('automake', type=('build'))
     depends_on('libtool', type=('build'))
-    depends_on('pkg-config', type=('build'))
+    depends_on('pkgconfig', type=('build'))
 
     def autoreconf(self, spec, prefix):
         autoreconf = which('autoreconf')
