@@ -38,10 +38,11 @@ class Chfs(AutotoolsPackage):
     def configure_args(self):
         args = []
 
-        if '+verbs' in self.spec:
-            args.extend(['--enable-zero-copy-read-rdma'])
-        
         if '+pmemkv' in self.spec:
             args.extend(['--with-pmemkv'])
+
+            if '+verbs' in self.spec:
+                args.extend(['--enable-zero-copy-read-rdma'])
+        
 
         return args
