@@ -18,13 +18,14 @@ class Chfs(AutotoolsPackage):
     variant('verbs', default=False, description='enable verbs')
     variant('pandoc', default=False, description='generate manual pages')
     variant('pmemkv', default=True, description='use pmemkv instead of a POSIX backend')
-    variant('zero_copy_read_rdma', default=False, description='enable zero copy read rdma')
-    conflicts('+zero_copy_read_rdma', when='~pmemkv')
+    variant('devdax', default=False, when='+pmemkv', description='enable devdax support')
+    variant('zero_copy_read_rdma', default=False, when='+pmemkv', description='enable zero copy read rdma')
 
     depends_on('libfabric fabrics=rxm,sockets,tcp,udp', when='~verbs')
     depends_on('libfabric fabrics=rxm,sockets,tcp,udp,verbs', when='+verbs')
     depends_on('mochi-margo')
     depends_on('pmemkv', when='+pmemkv')
+    depends_on('pmdk+ndctl', when='+devdax')
     depends_on('libfuse@2')
     depends_on('pandoc', when='+pandoc')
 
