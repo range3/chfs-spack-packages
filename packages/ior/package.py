@@ -12,7 +12,11 @@ class Ior(BuiltinIor):
     version('develop', branch='main', submodules=True)
     version('main', branch='main', submodules=True)
 
-    variant('chfs', default=False, description='support CHFS in IOR')
+    variant('chfs', when='@3.3.1:', default=False, description='support CHFS in IOR')
+    variant('gpu', when='@3.3.1:', default=False, description='support gpuDirect')
+
+    # cuda
+    depends_on('cuda', when='+gpu')
 
     # chfs
     depends_on('chfs', when='+chfs')
@@ -26,5 +30,10 @@ class Ior(BuiltinIor):
 
         if '+chfs' in spec:
             config_args.append('--with-chfs')
+
+        if '+gpu' in spec:
+            config_args.append('--with-gpuDirect')
+        else:
+            config_args.append('--without-gpuDirect')
 
         return config_args
