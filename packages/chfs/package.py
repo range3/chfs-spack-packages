@@ -12,7 +12,8 @@ class Chfs(AutotoolsPackage):
 
     version('master', branch='master')
     version('develop', branch='master')
-    version('2.0.0', sha256='61aa3600963bded220c28adc8be8bcb0e6dd2ef56f7fb596f4bdefcec37f73ae', preferred=True)
+    version('2.1.0', sha256='6cc21e9b890628eab0c8a669ec71787de6b71dd77827519e2723472d48337d63', preferred=True)
+    version('2.0.0', sha256='61aa3600963bded220c28adc8be8bcb0e6dd2ef56f7fb596f4bdefcec37f73ae')
     version('1.0.0', sha256='315295bf10b3b3fb93620791e844c540f6f238b4eab6a5c56825c6b7896737a2')
     # version('1.0.0-exp', git='', branch='experimental')
 
